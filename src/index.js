@@ -50,11 +50,13 @@ function returnFnResult(fn) {
  При вызове F, переданное число должно быть увеличено на единицу и возвращено из F
  */
 function returnCounter(number) {
-//	if (number==null) {number = 0};
-	
-return 	function myFunction() {
+		if (number==null) {number = 0};
+	function myFunction() {
    number++;
+   console.log(number)
+  return this;
 }
+return 	myFunction();
 }
 
 /*
@@ -64,6 +66,9 @@ return 	function myFunction() {
  Функция должна привязать переданные аргументы к функции F и вернуть получившуюся функцию
  */
 function bindFunction(fn) {
+
+    fn.apply(this, arguments);
+    return fn();
 }
 
 export {

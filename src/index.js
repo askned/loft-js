@@ -54,9 +54,9 @@ function returnCounter(number) {
 	function myFunction() {
    number++;
    console.log(number)
-  return this;
+  return number;
 }
-return 	myFunction();
+return 	myFunction;
 }
 
 /*
@@ -68,7 +68,7 @@ return 	myFunction();
 function bindFunction(fn) {
 
     fn.apply(this, arguments);
-    return fn();
+    return fn;
 }
 
 export {

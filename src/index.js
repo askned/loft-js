@@ -68,8 +68,12 @@ return 	myFunction;
 function bindFunction(fn) {
 
 	var args = Array.from(arguments);
- 	args.slice(0,1);
-    return fn.bind(this, args);
+ 	 args = args.slice(1);
+
+        return function() {
+        return fn.apply(this, args);
+        }
+        
 }
 
 export {

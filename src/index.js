@@ -10,11 +10,13 @@
  Зарпещено использовать встроенные методы для работы с массивами
  */
 function isAllTrue(array, fn) {
-	try{
-	if (typeof fn === "function")  {throw new Error("fn is not a function");}
-	if (array.lenght<1) {
-		throw new Error("empty array");
-	}
+	
+ if (!Array.isArray(array) || (array.length < 1)) {
+        throw new Error('empty array');
+    }
+    if (typeof fn !== 'function') {
+        throw new Error('fn is not a function');
+    }
 	var status = true;
 	for (var i = 0 ; i < array.length; i++) {
 		if(fn(array[i])==false) {
@@ -22,8 +24,10 @@ function isAllTrue(array, fn) {
 		}
 	}
 	return status;
-}catch (e){log(e.message);}
+
 }
+
+
 
 /*
  Задача 2:
@@ -35,11 +39,13 @@ function isAllTrue(array, fn) {
  Зарпещено использовать встроенные методы для работы с массивами
  */
 function isSomeTrue(array, fn) {
-try{
-	if (typeof fn === "function")  {throw new Error("fn is not a function");}
-	if (array.lenght<1) {
-		throw new Error("empty array");
-	}
+
+	 if (!Array.isArray(array) || (array.length < 1)) {
+        throw new Error('empty array');
+    }
+    if (typeof fn !== 'function') {
+        throw new Error('fn is not a function');
+    }
 	var status = false;
 	for (var i = 0 ; i < array.length; i++) {
 		if(fn(array[i])==true) {
@@ -47,7 +53,6 @@ try{
 		}
 	}
 	return status;
-}catch (e){log(e.message);}
 }
 
 /*
@@ -59,14 +64,18 @@ try{
  - fn не является функцией (с текстом "fn is not a function")
  */
 function returnBadArguments(fn) {
-	if (typeof fn === "function")  {throw new Error("fn is not a function");}
+	if (typeof fn !== "function")  {throw new Error("fn is not a function");}
+	var arrayEx  = [];
 	for (var i = 1 ; i < arguments.length; i++) {
+		
 		try{
 		fn(arguments[i])
 			}catch(e){
-				return arguments[i];
+				 arrayEx.push(arguments[i]);
 			}
+
 }
+return arrayEx;
 }
 
 /*
@@ -84,6 +93,22 @@ function returnBadArguments(fn) {
  - какой-либо из аргументов div является нулем (с текстом "division by 0")
  */
 function calculator() {
+	var number = 0;
+	var object = {
+    sum: function() {
+       // return number +arguments;
+   }
+    dif: function() {
+    //    return number -arguments;
+   }
+    div: function() {
+     //   return number /arguments;
+   }
+    mul: function() {
+     //   return number *arguments;
+   }
+}
+	//return object;
 }
 
 export {

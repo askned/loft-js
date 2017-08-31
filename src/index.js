@@ -67,8 +67,9 @@ return 	myFunction;
  */
 function bindFunction(fn) {
 
-    fn.apply(this, arguments);
-    return fn;
+  //  fn.apply(this, arguments);
+  //  return fn;
+   return fn.bind(this, argumentsArrray)
 }
 
 export {

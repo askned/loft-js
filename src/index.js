@@ -92,23 +92,31 @@ return arrayEx;
  - number не является числом (с текстом "number is not a number")
  - какой-либо из аргументов div является нулем (с текстом "division by 0")
  */
-function calculator() {
-	var number = 0;
+function calculator(number = 0) {
+	
+  if (typeof number !== 'number') {
+        throw new Error('number is not a number');
+    }
 	var object = {
-    sum: function() {
-       // return number +arguments;
-   }
-    dif: function() {
-    //    return number -arguments;
-   }
+    sum: function() { 
+    for (var i = 0 ; i < arguments.length; i++) {
+    	number = number + arguments[i];
+    }      
+    return number;
+	},
+    dif: function() {   for (var i = 0 ; i < arguments.length; i++) {
+    	number = number -arguments[i];
+    }      return number;},
     div: function() {
-     //   return number /arguments;
-   }
-    mul: function() {
-     //   return number *arguments;
-   }
+     for (var i = 0 ; i < arguments.length; i++) {
+     	if (arguments[i]==0) {throw new Error("division by 0");}
+    	number = number / arguments[i];
+    }      return number;},
+    mul: function() {for (var i = 0 ; i < arguments.length; i++) {
+    	number = number *arguments[i];
+    }      return number;}
 }
-	//return object;
+	return object;
 }
 
 export {

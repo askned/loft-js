@@ -29,6 +29,7 @@ return newArray;
  Напишите аналог встроенного метода reduce для работы с массивами
  */
 function reduce(array, fn, initial) {
+	if (array.length<1 && initial==null) {throw new  TypeError();}
 	let i = 0;
 	if (initial==null) {initial=array[0]; i =1;}
 	var prev= initial;

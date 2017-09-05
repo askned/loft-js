@@ -31,11 +31,12 @@ return newArray;
 function reduce(array, fn, initial) {
 	if (array.length<1 && initial==null) {throw new  TypeError();}
 	let i = 0;
-	if (initial==null) {initial=array[0]; i =1;}
+	if (!initial) {initial=array[0]; i =1;}
 	var prev= initial;
 	for (i; i <array.length; i++) {
 prev = fn(prev,array[i],i,array);
 }
+return prev;
 }
 
 /*
@@ -73,7 +74,7 @@ function upperProps(obj) {
 	let array = Object.keys(obj); 
 	let newArray = [];
 	for (var item in array){
-newArray.push(item.toUpperCase);
+newArray.push(array[item].toUpperCase());
 	}
 	return newArray;
 }

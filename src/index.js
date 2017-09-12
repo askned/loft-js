@@ -69,6 +69,11 @@ if(e.target.tagName == "BUTTON")
  * @param {function} fn - обработчик
  */
 function once(target, fn) {
+    var myFunc = function() {
+        fn();
+        target.removeEventListener('click',myFunc);
+    }
+    target.addEventListener('click',myFunc)
 }
 
 export {

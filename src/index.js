@@ -7,6 +7,12 @@
  * @return {Promise}
  */
 function delayPromise(seconds) {
+    return new Promise(function(resolved){
+        setTimeout(function(){
+            resolved();
+        },seconds*1000); 
+     
+    });
 }
 
 /**
@@ -17,6 +23,33 @@ function delayPromise(seconds) {
  * @return {Promise<Array<{name: String}>>}
  */
 function loadAndSortTowns() {
+    return new Promise(
+        function(resolved, rejected){
+            var xmlhttp = new XMLHttpRequest();
+            var url = "https://raw.githubusercontent.com/smelukov/citiesTest/master/cities.json";
+            if (this.status != 200) {
+                console.log("not 200 return");
+                rejected();
+            }
+            xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                var myArr = JSON.parse(this.responseText);
+                // var array = [];
+                // for(var i =0; i < myArr.length;i++){
+                //     array[i]=myArr[i].name;
+                // }
+                myArr.name.sort();
+                console.log(myArr);
+                return myArr
+                }
+            };
+            
+            xmlhttp.open("GET", url);
+            xmlhttp.send();
+            xmlhttp.addEventListener("load",()=>{resolved();})
+        }
+    )
+   
 }
 
 export {

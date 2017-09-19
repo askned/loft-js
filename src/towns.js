@@ -36,6 +36,28 @@ let homeworkContainer = document.querySelector('#homework-container');
  * @return {Promise<Array<{name: string}>>}
  */
 function loadTowns() {
+    return new Promise(
+        function(resolved, rejected){
+            var xmlhttp = new XMLHttpRequest();
+            var url = "https://raw.githubusercontent.com/smelukov/citiesTest/master/cities.json";
+            if (this.status != 200) {
+                console.log("not 200 return");
+                rejected();
+            }
+            xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                var myArr = JSON.parse(this.responseText);
+                myArr.name.sort();
+                console.log(myArr);
+                return myArr
+                }
+            };
+            
+            xmlhttp.open("GET", url);
+            xmlhttp.send();
+            xmlhttp.addEventListener("load",()=>{resolved();})
+        }
+    )
 }
 
 /**
@@ -52,6 +74,9 @@ function loadTowns() {
  * @return {boolean}
  */
 function isMatching(full, chunk) {
+   var i = full.toLowerCase();
+    var i2 = chunk.toLowerCase();
+    return i.includes(i2)
 }
 
 let loadingBlock = homeworkContainer.querySelector('#loading-block');

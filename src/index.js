@@ -38,7 +38,14 @@ function loadAndSortTowns() {
                 // for(var i =0; i < myArr.length;i++){
                 //     array[i]=myArr[i].name;
                 // }
-                myArr.name.sort();
+                myArr.sort(compareCity);
+                
+                function compareCity(objCity1, objCity2) {
+                        if (objCity1.name < objCity2.name) {
+                            return -1
+                        } else if (objCity1.name > objCity2.name) {
+                            return 1
+                 }
                 console.log(myArr);
                 return myArr
                 }

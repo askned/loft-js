@@ -63,11 +63,21 @@ let filterBlock = homeworkContainer.querySelector('#filter-block');
 let filterInput = homeworkContainer.querySelector('#filter-input');
 let filterResult = homeworkContainer.querySelector('#filter-result');
 let townsPromise;
-loadTowns().then(list => {
+let myload = loadTowns().then(list => {
+    console.log("start");
         loadingBlock.style.display = 'none';
         filterBlock.style.display = 'block';
         townsPromise = list;
         console.log(townsPromise);
+    },()=>{
+        let el = document.createElement('div');
+        let bt = document.createElement('button');
+        bt.textContent = "Повторить"
+        el.innerText= "Не удалось загрузить города";
+        bt.addEventListener("click",()=>{myload;});
+        loadingBlock.innerHTML="";
+        loadingBlock.appendChild(el);
+        loadingBlock.appendChild(bt);
     }) 
     filterInput.addEventListener("keyup",function(){
         filterResult.innerHTML="";

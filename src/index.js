@@ -27,23 +27,24 @@ function loadAndSortTowns() {
         function(resolved, rejected){
             var xmlhttp = new XMLHttpRequest();
             var url = "https://raw.githubusercontent.com/smelukov/citiesTest/master/cities.json";
-            if (this.status != 200) {
-                console.log("not 200 return");
-                rejected();
-            }
+         
+          
             xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 var myArr = JSON.parse(xmlhttp.responseText);
                 myArr.sort(compareCity);
-                return myArr;
-            }; 
-            
+                console.log(myArr);
+                resolved(myArr);
+            } else if ((xmlhttp.readyState == 4 && xmlhttp.status != 200)){
+                rejected();
+            }
+        }
             xmlhttp.open("GET", url);
             xmlhttp.send(); 
-            xmlhttp.addEventListener("load",()=>{resolved();})
-        }
+           // xmlhttp.addEventListener("load",()=>{resolved();})
+        
     }
-    )
+    )   
     
 }
 function compareCity(objCity1, objCity2) {

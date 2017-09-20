@@ -36,28 +36,7 @@ let homeworkContainer = document.querySelector('#homework-container');
  * @return {Promise<Array<{name: string}>>}
  */
 function loadTowns() {
-    return new Promise(
-        function(resolved, rejected){
-            var xmlhttp = new XMLHttpRequest();
-            var url = "https://raw.githubusercontent.com/smelukov/citiesTest/master/cities.json";
-            if (this.status != 200) {
-                console.log("not 200 return");
-                rejected();
-            }
-            xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                var myArr = JSON.parse(this.responseText);
-                myArr.name.sort();
-                console.log(myArr);
-                return myArr
-                }
-            };
-            
-            xmlhttp.open("GET", url);
-            xmlhttp.send();
-            xmlhttp.addEventListener("load",()=>{resolved();})
-        }
-    )
+        return require('./index').loadAndSortTowns();
 }
 
 /**
@@ -70,7 +49,7 @@ function loadTowns() {
  * isMatching('Moscow', 'cow') // true
  * isMatching('Moscow', 'SCO') // true
  * isMatching('Moscow', 'Moscov') // false
- *
+ * 
  * @return {boolean}
  */
 function isMatching(full, chunk) {
@@ -84,11 +63,28 @@ let filterBlock = homeworkContainer.querySelector('#filter-block');
 let filterInput = homeworkContainer.querySelector('#filter-input');
 let filterResult = homeworkContainer.querySelector('#filter-result');
 let townsPromise;
-
-filterInput.addEventListener('keyup', function() {
-});
+loadTowns().then(list => {
+        loadingBlock.style.display = 'none';
+        filterBlock.style.display = 'block';
+        townsPromise = list;
+        console.log(townsPromise);
+    }) 
+    filterInput.addEventListener("keyup",function(){
+        filterResult.innerHTML="";
+        if (townsPromise){
+        townsPromise.forEach(function(city){
+           
+            if(isMatching(city.name,filterInput.value)&& filterInput.value!==""){
+                console.log(city.name); 
+              let el = document.createElement('div');
+            el.innerText= city.name;
+            filterResult.appendChild(el);
+            }
+        })
+    }})
+;
 
 export {
     loadTowns,
     isMatching
-};
+}; 

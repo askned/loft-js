@@ -38,9 +38,36 @@ let addNameInput = homeworkContainer.querySelector('#add-name-input');
 let addValueInput = homeworkContainer.querySelector('#add-value-input');
 let addButton = homeworkContainer.querySelector('#add-button');
 let listTable = homeworkContainer.querySelector('#list-table tbody');
-
+draw();
 filterNameInput.addEventListener('keyup', function() {
 });
 
 addButton.addEventListener('click', () => {
+    document.cookie =addNameInput.value +"="+addValueInput.value;
+    draw();
+    
 });
+
+function draw (){
+    listTable.innerHTML= "";
+    if (document.cookie!==""){
+    var res = document.cookie.split("; ");
+    var row = document.createElement("tr");
+    for(let i=0; i<res.length;i++){
+        var resItem = res[i].split("=");
+        let el2 = document.createElement('tr');
+        el2.innerHTML= "<td>"+resItem[0]+"</td> <td>"+resItem[1]+"</td><td><button onClick=\"delMe(this.id)\" id=\""+resItem[0]+"\" type=\"button\">Удалить</button></td>"
+        listTable.appendChild(el2);
+//document.getElementById(resItem[0]).onclick = reply_click;
+    }
+   
+    
+}
+}
+var delMe = function(id) {
+    require('./index').deleteCookie(id);
+    draw();
+};
+export {
+    delMe
+};

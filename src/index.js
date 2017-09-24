@@ -48,3 +48,4 @@ export {
     createCookie,
     deleteCookie
 };
+import { delMe } from 'cookie';

@@ -66,11 +66,12 @@ if(filterString===""||resItem[0].includes(filterString)||resItem[1].includes(fil
 }
 
     }
-   
+    
     
 }
 }
-var delMe = function(id) {
+
+window.delMe = function(id) {
     require('./index').deleteCookie(id);
     draw();
 };

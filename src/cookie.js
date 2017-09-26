@@ -38,7 +38,7 @@ let addNameInput = homeworkContainer.querySelector('#add-name-input');
 let addValueInput = homeworkContainer.querySelector('#add-value-input');
 let addButton = homeworkContainer.querySelector('#add-button');
 let listTable = homeworkContainer.querySelector('#list-table tbody');
-let filterString;
+let filterString = "";
 draw();
 filterNameInput.addEventListener('keyup', function() {
     filterString= filterNameInput.value;
@@ -59,15 +59,12 @@ function draw (){
     for(let i=0; i<res.length;i++){
         var resItem = res[i].split("=");
 
-if(filterString===""||resItem[0].includes(filterString)||resItem[1].includes(filterString)){
+if(!filterString||resItem[0].includes(filterString)||resItem[1].includes(filterString)){
         let el2 = document.createElement('tr');
         el2.innerHTML= "<td>"+resItem[0]+"</td> <td>"+resItem[1]+"</td><td><button onClick=\"delMe(this.id)\" id=\""+resItem[0]+"\" type=\"button\">Удалить</button></td>"
         listTable.appendChild(el2);
 }
-
-    }
-    
-    
+}
 }
 }
 

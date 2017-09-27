@@ -12,7 +12,7 @@ function api(method, params) {
 
 const promise = new Promise((resolve, reject) => {
     VK.init({
-        apiId: 5267932
+        apiId: 	6198200
     });
 
     VK.Auth.login(data => {

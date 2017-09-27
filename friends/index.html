@@ -7,6 +7,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.10/handlebars.js"></script>
 </head>
 <body>
+       
+        
 <div class="container">
     <h1 id="headerInfo"></h1>
 
@@ -14,13 +16,49 @@
 </div>
 
 <script id="user-template" type="text/x-handlebars-template">
-    <div>
-        <div><b>Список пользователей:</b></div>
-        {{#each list}}
-            <div>{{first_name}} {{last_name}}</div>
-            <img src="{{photo_100}}"/>
-        {{/each}}
-    </div>
+    <table style="height: 164px; width: 800px;">
+            <tbody>
+                    <tr>
+                    <td style="width: 256px;">
+                            <table>
+                            <tbody>
+                                    <tr>
+                                    <td style="width: 156px;" colspan="3"><input type="text" name="fname"><br><strong>Ваши друзья</strong> </td>
+                                    </tr>
+                                    {{#each list}}
+                                    <tr>
+                                    <td style="width: 84px;"><img src="{{photo_100}}" width="50" height="50" /></td>
+                                    <td style="width: 134px; text-align: left;">&nbsp; &nbsp;&nbsp;{{first_name}} {{last_name}}</td>
+                                    <td style="width: 38px; text-align: center;" name="bt_plus">
+                                    <h2><strong>+</strong></h2>
+                                    </td>
+                                    </tr>
+                                    {{/each}}
+                                    </tbody>
+                                </table>
+                    </td>
+                    <td style="width: 161px; text-align: center; vertical-align: text-top;">
+                            <table>
+                            <tbody>
+                                    <tr>
+                                 <td style="width: 156px;" colspan="3"><input type="text" name="fname"><br><strong>Друзья в списке</strong></td>
+                                    </tr>
+                                    {{#each list2}}
+                                    <tr>
+                                    <td style="width: 84px;"><img src="{{photo_100}}" width="50" height="50" /></td>
+                                    <td style="width: 234px; text-align: left;">&nbsp; &nbsp;&nbsp;{{first_name}} {{last_name}}</td>
+                                    <td style="width: 38px; text-align: center;">
+                                    <h2><strong>Х</strong></h2>
+                                    </td>
+                                    </tr>
+                                    {{/each}}
+                                    </tbody>
+                                </table>
+                    </td>
+                    </tr>
+                    </tbody>
+           
+            </table>
 </script>
 <script src="index1.js"></script>
 </body>

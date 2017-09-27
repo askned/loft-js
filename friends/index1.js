@@ -23,26 +23,44 @@ const promise = new Promise((resolve, reject) => {
         }
     }, 2);
 });
+var listFriend = [];
+var list2 = [];
 
 promise
     .then(() => {
         return api('users.get', { v: 5.68, name_case: 'gen' });
     })
-    .then(data => {
+    .then(data => { 
         const [user] = data;
         headerInfo.innerText = `Друзья на странице ${user.first_name} ${user.last_name}`;
 
         return api('friends.get', { v: 5.68, fields: 'first_name, last_name, photo_100' })
     })
     .then(data => {
-        const templateElement = document.querySelector('#user-template');
-        const source = templateElement.innerHTML,
-            render = Handlebars.compile(source),
-            template = render({ list: data.items });
+        listFriend = data.items;
 
-        results.innerHTML = template;
+   draw(listFriend);
+        initButton();
     })
     .catch(function (e) {
         alert('Ошибка: ' + e.message);
     });
+function initButton(){
+    var elements = document.getElementsByName("bt_plus");
+    console.log(elements);
+    elements.forEach(function(city,i){
+        city.addEventListener("click",()=>{
+            list2.push(listFriend[i]);
+            console.log("click"+listFriend[i].first_name);
+            render(listFriend);
+        })
+    })
 
+}
+function draw(listData){
+    const templateElement = document.querySelector('#user-template');
+    const source = templateElement.innerHTML,
+    render = Handlebars.compile(source),
+    template = render({ list: listData });
+    results.innerHTML = template;
+}

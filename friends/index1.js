@@ -52,8 +52,7 @@ const promise = new Promise((resolve, reject) => {
 
 if(localStorage.data){
     initSave();
-    draw(listFriend, results,false); 
-    draw(list2, results2,true); 
+   drawAll();
 }else{
 promise
     .then(() => {
@@ -83,16 +82,14 @@ function initButton(){
         element.addEventListener("click",()=>{
             list2.push(listFriend[i]);
             listFriend.splice(i, 1);
-            draw(list2, results2,true); 
-            draw(listFriend, results,false); 
+          drawAll();
         })
     })
     elements_list.forEach(function(elements_list,i){       
         elements_list.addEventListener("click",()=>{
             listFriend.push(listFriend[i]);
             list2.splice(i, 1);
-            draw(list2, results2,true); 
-            draw(listFriend, results,false); 
+           drawAll();
         })
     })
 }
@@ -110,7 +107,7 @@ function draw(listData,container,selected){
     
      var balls = document.getElementsByName("items");
   
-    balls.forEach(function(ball){
+    balls.forEach(function(ball,i){
     ball.onmousedown = function(e) {
   ball.style.position = 'absolute';
   moveAt(e);
@@ -130,20 +127,31 @@ function draw(listData,container,selected){
     var dropElem = findDroppable(e);
     console.log(dropElem.id);
     if (!dropElem) {
-      } else {
+      } else if(dropElem.id==="second"){
+          len = i - listFriend.length;
+        console.log("mouse out second"+ len);
           ball.style.visibility = "hidden";
-
-    list2.push(listFriend[0]);
-    listFriend.splice(0, 1);
-    draw(list2, results2,true); 
-    draw(listFriend, results,false); 
-      }
+          listFriend.push(list2[len]);
+          list2.splice(len, 1);
+         
+      }else {
+        console.log("mouse out first"+i);
+           ball.style.visibility = "hidden";
+           list2.push(listFriend[i]);
+           listFriend.splice(i, 1);
+    }
+    drawAll();    
     document.onmousemove = null;
     ball.onmouseup = null;
   }
 }
     })
     initButton();
+}
+
+function drawAll(){
+      draw(list2, results2,true); 
+    draw(listFriend, results,false); 
 }
 
 function filteringList(notfiltered,str){

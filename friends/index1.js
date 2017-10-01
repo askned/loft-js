@@ -1,3 +1,29 @@
+const results = document.getElementById('results'),
+results2 = document.getElementById('results2');
+filterNameInput = document.getElementById('f-name');
+filter2NameInput = document.getElementById('select-name');
+save = document.getElementById('user-button');
+let filterString1 = "";
+let filterString2 = "";
+var listFriend = [];
+var list2 = [];
+var storage = localStorage;
+var elementType = 1;
+
+
+filterNameInput.addEventListener('keyup', function() {
+    filterString1= filterNameInput.value;
+    filteretList = filteringList(listFriend,filterString1)
+    draw(filteretList, results,false); 
+   
+});
+filter2NameInput.addEventListener('keyup', function() {
+    filterString2= filter2NameInput.value;
+    filteretList2 = filteringList(list2,filterString2)
+    draw(filteretList2, results2,true); 
+});
+console.log(results, results2)
+
 function api(method, params) {
     return new Promise((resolve, reject) => {
         VK.api(method, params, data => {
@@ -23,9 +49,12 @@ const promise = new Promise((resolve, reject) => {
         }
     }, 2);
 });
-var listFriend = [];
-var list2 = [];
 
+if(localStorage.data){
+    initSave();
+    draw(listFriend, results,false); 
+    draw(list2, results2,true); 
+}else{
 promise
     .then(() => {
         return api('users.get', { v: 5.68, name_case: 'gen' });
@@ -39,28 +68,116 @@ promise
     .then(data => {
         listFriend = data.items;
 
-   draw(listFriend);
-        initButton();
+   draw(listFriend,results);
+       
     })
     .catch(function (e) {
         alert('Ошибка: ' + e.message);
     });
+}
 function initButton(){
     var elements = document.getElementsByName("bt_plus");
-    console.log(elements);
-    elements.forEach(function(city,i){
-        city.addEventListener("click",()=>{
+    var elements_list = document.getElementsByName("bt_del");
+
+    elements.forEach(function(element,i){       
+        element.addEventListener("click",()=>{
             list2.push(listFriend[i]);
-            console.log("click"+listFriend[i].first_name);
-            render(listFriend);
+            listFriend.splice(i, 1);
+            draw(list2, results2,true); 
+            draw(listFriend, results,false); 
         })
     })
-
+    elements_list.forEach(function(elements_list,i){       
+        elements_list.addEventListener("click",()=>{
+            listFriend.push(listFriend[i]);
+            list2.splice(i, 1);
+            draw(list2, results2,true); 
+            draw(listFriend, results,false); 
+        })
+    })
 }
-function draw(listData){
-    const templateElement = document.querySelector('#user-template');
+function draw(listData,container,selected){
+     templateElement = document.querySelector('#user-template');
+    if(selected){
+        templateElement = document.querySelector('#select-user-template');
+    }
     const source = templateElement.innerHTML,
     render = Handlebars.compile(source),
     template = render({ list: listData });
-    results.innerHTML = template;
+    container.innerHTML = template;
+
+
+    
+     var balls = document.getElementsByName("items");
+  
+    balls.forEach(function(ball){
+    ball.onmousedown = function(e) {
+  ball.style.position = 'absolute';
+  moveAt(e);
+  document.body.appendChild(ball);
+
+  ball.style.zIndex = 1000; 
+  function moveAt(e) {
+    ball.style.left = e.pageX - ball.offsetWidth / 2 + 'px';
+    ball.style.top = e.pageY - ball.offsetHeight / 2 + 'px';
+  }
+  document.onmousemove = function(e) {
+    moveAt(e);
+  }
+
+  ball.onmouseup = function(e) {
+      console.log("mouse out");
+    var dropElem = findDroppable(e);
+    console.log(dropElem.id);
+    if (!dropElem) {
+      } else {
+          ball.style.visibility = "hidden";
+
+    list2.push(listFriend[0]);
+    listFriend.splice(0, 1);
+    draw(list2, results2,true); 
+    draw(listFriend, results,false); 
+      }
+    document.onmousemove = null;
+    ball.onmouseup = null;
+  }
 }
+    })
+    initButton();
+}
+
+function filteringList(notfiltered,str){
+    if(str===""){return notfiltered;}
+    list =[];
+    notfiltered.forEach(function(element){   
+    
+        if(element.first_name.includes(str)||element.last_name.includes(str)){ 
+            list.push(element);
+        }
+      })
+    return list;
+}
+
+
+
+
+    save.addEventListener('click', function() {
+        storage.data2 = JSON.stringify(list2);
+        storage.data = JSON.stringify(listFriend);
+    });
+
+  function initSave(){
+        list2 = JSON.parse(storage.data2 || '{}');
+        listFriend = JSON.parse(storage.data || '{}');
+}
+
+function findDroppable(event) {
+ 
+    var elem = document.elementFromPoint(event.clientX, event.clientY);
+ // console.log(elem)
+    if (elem == null) {
+      return null;
+    }
+
+    return elem.closest('.typeField');
+  }

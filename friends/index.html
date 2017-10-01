@@ -1,65 +1,89 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
     <script src="http://vk.com/js/api/openapi.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.10/handlebars.js"></script>
+    <style type="text/css">
+       .img-circle {
+        border-radius: 50%;
+    }
+       </style>
 </head>
 <body>
        
         
-<div class="container">
+<div class="container" style="height: 164px; width: 800px;">
     <h1 id="headerInfo"></h1>
+    <button id="user-button" style="height: 50px; width: 100px;"> Сохранить</button>    
+    <table >
+        <tbody>
+                <tr>
+                <td >
+                        <table>
+                        <tbody>
+                                <tr>
+                                <div ><input type="text" id="f-name"><br><strong>Ваши друзья</strong> </div>
+                                </tr>
+                                <tr>
+                                <div id="results" ></div>
+                                </tr>
+                                </tbody>
+                            </table>
+                </td>
+                <td style="width: 161px; text-align: center; vertical-align: text-top;">
+                        <table>
+                        <tbody>
+                                <tr>
+                             <div ><input type="text" id="select-name"><br><strong>Друзья в списке</strong></div>
+                                </tr>
+                                <tr>
+                                <div id="results2"></div>
+                                </tr>
+                                </tbody>
+                            </table>
+                </td>
+                </tr>
+                </tbody>
+       
+        </table>
 
-    <div id="results"></div>
+   
 </div>
 
 <script id="user-template" type="text/x-handlebars-template">
-    <table style="height: 164px; width: 800px;">
-            <tbody>
-                    <tr>
-                    <td style="width: 256px;">
-                            <table>
-                            <tbody>
-                                    <tr>
-                                    <td style="width: 156px;" colspan="3"><input type="text" name="fname"><br><strong>Ваши друзья</strong> </td>
-                                    </tr>
+<table class="typeField">
+  
                                     {{#each list}}
-                                    <tr>
-                                    <td style="width: 84px;"><img src="{{photo_100}}" width="50" height="50" /></td>
-                                    <td style="width: 134px; text-align: left;">&nbsp; &nbsp;&nbsp;{{first_name}} {{last_name}}</td>
+                                    <tr name="items"  id="first" class="typeField">
+                                    <td  style="width: 84px;"><img class="img-circle" src="{{photo_100}}" width="50" height="50" /></td>
+                                    <td style="width: 134px; text-align: left;" class="draggable">&nbsp; &nbsp;&nbsp;{{first_name}} {{last_name}}</td>
                                     <td style="width: 38px; text-align: center;" name="bt_plus">
                                     <h2><strong>+</strong></h2>
                                     </td>
                                     </tr>
                                     {{/each}}
-                                    </tbody>
-                                </table>
-                    </td>
-                    <td style="width: 161px; text-align: center; vertical-align: text-top;">
-                            <table>
-                            <tbody>
-                                    <tr>
-                                 <td style="width: 156px;" colspan="3"><input type="text" name="fname"><br><strong>Друзья в списке</strong></td>
-                                    </tr>
-                                    {{#each list2}}
-                                    <tr>
-                                    <td style="width: 84px;"><img src="{{photo_100}}" width="50" height="50" /></td>
-                                    <td style="width: 234px; text-align: left;">&nbsp; &nbsp;&nbsp;{{first_name}} {{last_name}}</td>
-                                    <td style="width: 38px; text-align: center;">
-                                    <h2><strong>Х</strong></h2>
-                                    </td>
-                                    </tr>
-                                    {{/each}}
-                                    </tbody>
-                                </table>
-                    </td>
-                    </tr>
-                    </tbody>
-           
-            </table>
+  
+</table>
 </script>
+<script id="select-user-template" type="text/x-handlebars-template">
+    <table class="typeField">
+      
+                                        {{#each list}}
+                                        <tr name="items" id="second" class="typeField">
+                                        <td  class="draggable2" style="width: 84px;"><img class="img-circle" src="{{photo_100}}" width="50" height="50" /></td>
+                                        <td style="width: 134px; text-align: left;" class="draggable2">&nbsp; &nbsp;&nbsp;{{first_name}} {{last_name}}</td>
+                                        <td style="width: 38px; text-align: center;" name="bt_del">
+                                        <h2><strong>x</strong></h2>
+                                        </td>
+                                        </tr>
+                                        {{/each}}
+      
+    </table>
+    </script>
+
 <script src="index1.js"></script>
 </body>
 </html>

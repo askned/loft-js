@@ -79,14 +79,16 @@ function initButton(){
     var elements_list = document.getElementsByName("bt_del");
 
     elements.forEach(function(element,i){       
-        element.addEventListener("mousedown",()=>{
+        element.addEventListener("mousedown",(e)=>{
+            e.stopPropagation();
             list2.push(listFriend[i]);
             listFriend.splice(i, 1);
           drawAll();
         })
     })
     elements_list.forEach(function(elements_list,i){       
-        elements_list.addEventListener("mousedown",()=>{
+        elements_list.addEventListener("mousedown",(e)=>{
+            e.stopPropagation();
             listFriend.push(listFriend[i]);
             list2.splice(i, 1);
            drawAll();
